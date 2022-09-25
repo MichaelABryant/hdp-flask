@@ -69,19 +69,19 @@ class Role(db.Model):
     
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key=True, unique=True)
     name = db.Column(db.String(64))
     location = db.Column(db.String(64))
     about_me = db.Column(db.Text())
-    email = db.Column(db.String(64), unique=True, index=True)
-    username = db.Column(db.String(64), db.ForeignKey('patients.doctor_id'), unique=True, index=True)
+    email = db.Column(db.String(64), unique=True)
+    username = db.Column(db.String(64), unique=True)
     password_hash  = db.Column(db.String(128))
     member_since = db.Column(db.DateTime(), default=datetime.utcnow)
     last_seen = db.Column(db.DateTime(), default=datetime.utcnow)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     confirmed = db.Column(db.Boolean, default=False)
     avatar_hash = db.Column(db.String(32))
-    patients = db.relationship('Patient', backref='patients')
+    patients = db.relationship('Patient', backref='doctor')
     
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
@@ -192,8 +192,8 @@ def load_user(user_id):
 
 class Patient(db.Model):
     __tablename__='patients'
-    id = db.Column(db.Integer, primary_key=True)
-    doctor_id = db.Column(db.String(64))
+    id = db.Column(db.Integer, primary_key=True, unique=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     submission_datetime = db.Column(db.DateTime, unique=False)
     patient_name = db.Column(db.String(64), unique=False)
     age = db.Column(db.Integer, unique=False)

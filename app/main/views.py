@@ -112,7 +112,7 @@ def predict():
                     temp["thal"] = "Reversible defect"
                 
                 
-                patient_information = Patient(doctor_id=current_user.username,
+                patient_information = Patient(user_id=current_user.id,
                                               submission_datetime=datetime.utcnow(),
                                               patient_name=form.patient_name.data,
                                               age=form.age.data,
@@ -156,19 +156,19 @@ def user(username):
     page = request.args.get('page',1,type=int)
     if form.validate_on_submit():
         if form.name.data:
-            pagination = query.filter_by(doctor_id=current_user.username).filter_by(patient_name=form.name.data).order_by(Patient.submission_datetime.desc()).paginate(
+            pagination = query.filter_by(user_id=current_user.id).filter_by(patient_name=form.name.data).order_by(Patient.submission_datetime.desc()).paginate(
                 page, per_page=current_app.config['HDP_PATIENTS_PER_PAGE'],
                 error_out=False)
             patients = pagination.items
             return render_template('user.html', user=user, patients=patients, form=form, pagination=pagination)
         else:
-            pagination = query.filter_by(doctor_id=current_user.username).order_by(Patient.submission_datetime.desc()).paginate(
+            pagination = query.filter_by(user_id=current_user.id).order_by(Patient.submission_datetime.desc()).paginate(
                 page, per_page=current_app.config['HDP_PATIENTS_PER_PAGE'],
                 error_out=False)
             patients = pagination.items
             return render_template('user.html', user=user, patients=patients, form=form, pagination=pagination)                
     else:
-        pagination = query.filter_by(doctor_id=current_user.username).order_by(Patient.submission_datetime.desc()).paginate(
+        pagination = query.filter_by(user_id=current_user.id).order_by(Patient.submission_datetime.desc()).paginate(
                 page, per_page=current_app.config['HDP_PATIENTS_PER_PAGE'],
                 error_out=False)
         patients = pagination.items
