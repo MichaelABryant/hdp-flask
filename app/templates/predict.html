@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Heart Disease Predictor{% endblock %}
+
+{% block page_content %}
+
+<div class="page-header">
+    <h1>Enter patient information</h1>
+    {% if current_user.is_authenticated %}
+        You are logged in as {{ current_user.username }} - submitted information will be saved
+    {% else %}
+        You are not currently logged in - submitted information will not be saved
+    {% endif %}
+</div>
+
+{{ wtf.quick_form(form) }}
+{% endblock %}

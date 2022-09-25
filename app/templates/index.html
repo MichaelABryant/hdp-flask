@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Heart Disease Predictor{% endblock %}
+
+{% block page_content %}
+
+<div class="page-header">
+    <h1>Welcome to Heart Disease Predictor</h1>
+</div>
+<div class="page-content">
+    <h4>Site Features:</h4>
+    <ul>
+        <li>Use patient information to make heart disease predictions and compute predictive probabilities</li>
+        <li>Learn about the data and model used to make heart disease predictions</li>
+        <li>Register and log in to store and browse your patient information and heart disease predictions in your patient database</li>       
+    </ul>
+    <br><br>
+    <center><img src="{{ welcome_pic }}" width="100%" height="200"/></center>
+</div>
+
+{% endblock %}
+

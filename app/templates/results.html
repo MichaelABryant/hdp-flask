@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Heart Disease Predictor{% endblock %}
+
+{% block page_content %}
+
+<div class="page-header">
+    {% if probability[0][1] >= 0.5 %}
+    <h1>Prediction <small>{{ patient_name }} has heart disease.</small></h1>
+{% else %}
+    <h1>Prediction <small>{{ patient_name }} does not heart disease.</small></h4>
+{% endif %}
+</div>
+
+<center>
+<img src="data:image/png;base64, {{ plot_loc }}">
+</center>
+{% endblock %}
